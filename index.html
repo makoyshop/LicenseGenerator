@@ -115,6 +115,8 @@
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
 
+<!-- 🔒 Hidden content until passcode is correct -->
+<div id="content" style="display:none;">
 <center>
     <div class="container">
         <div id="msg1"></div>
@@ -127,11 +129,12 @@
         <button class="button" onclick="copyid()">Copy Blog ID</button>
         <input type="text" id="license1" placeholder="Blog License" readonly>
         <button class="button" onclick="copy1()">Copy License</button>
-        <!--[ Paste Your Google sheet Link in href '' ]-->
-        <a target='_blank' href='https://docs.google.com/spreadsheets/d/1BW6mxV9M314y5aOvnYuEMfR_dj6eG5VOYy0I-4Dgs8I/edit?gid=0#gid=0'>       <button class="button" type="submit" id="btnSubmit">Add In Sheet</button>
+        <a target='_blank' href='https://docs.google.com/spreadsheets/d/1BW6mxV9M314y5aOvnYuEMfR_dj6eG5VOYy0I-4Dgs8I/edit?gid=0#gid=0'>
+            <button class="button" type="submit" id="btnSubmit">Add In Sheet</button>
         </a>
     </div>
 </center>
+</div>
 
 <div id="toastNotif" class="toastNotif"></div>
 
@@ -157,8 +160,8 @@
             var randomNumber = Math.floor(Math.random() * chars.length);
             password += chars.substring(randomNumber, randomNumber + 1);
         }
-        
-        document.getElementById("spinner").style.display = "block"; // Show spinner
+
+        document.getElementById("spinner").style.display = "block";
 
         $.ajax({
             url: text + "/feeds/posts/summary/?alt=json",
@@ -169,14 +172,14 @@
                 var IDblog = dataID.split('-');
                 var blogID = IDblog[1];
                 document.getElementById("blogid1").value = blogID;
-                document.getElementById("spinner").style.display = "none"; // Hide spinner
+                document.getElementById("spinner").style.display = "none";
             },
             error: function() {
                 showNotification('Failed to fetch Blog ID.');
-                document.getElementById("spinner").style.display = "none"; // Hide spinner
+                document.getElementById("spinner").style.display = "none";
             }
         });
-        
+
         var text2 = document.getElementById("ens1").value;
         var password1 = text2 + "-" + password;
         document.getElementById("license1").value = password1;
@@ -221,24 +224,21 @@
         }
         return true;
     }
-</script>
 
-
-
-<script>
+    // 🔐 Passcode check
     function checkPasscode() {
-      var code = prompt("Enter Passcode:");
-      if (code === "099529") {
-        document.getElementById("content").style.display = "block";
-      } else {
-        alert("Incorrect passcode!");
-      }
+        var code = prompt("Enter Passcode:");
+        if (code === "098529") {
+            document.getElementById("content").style.display = "block";
+        } else {
+            alert("Incorrect passcode!");
+            checkPasscode(); // Retry until correct
+        }
     }
+
+    // 🔐 Call on page load
     window.onload = checkPasscode;
-  </script>    
-
-
-    
+</script>
 
 </body>
 </html>
