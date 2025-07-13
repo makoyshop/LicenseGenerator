@@ -15,9 +15,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       padding: 10px;
       box-sizing: border-box;
+      flex-direction: column;
     }
     .container, .passcode-box {
       background-color: #fff;
@@ -28,6 +28,7 @@
       width: 100%;
       text-align: center;
       box-sizing: border-box;
+      margin-top: 50px;
     }
     input[type="text"], input[type="password"] {
       width: calc(100% - 22px);
@@ -92,7 +93,7 @@
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
 
-<!-- 🔐 Passcode Input Screen -->
+<!-- 🔐 Passcode Screen -->
 <center>
   <div class="passcode-box" id="passcode-box">
     <h3>Enter Passcode to Access</h3>
@@ -101,7 +102,7 @@
   </div>
 </center>
 
-<!-- 🔒 Main Content (Initially Hidden) -->
+<!-- 🔒 Main App Content -->
 <div id="content" style="display:none;">
   <center>
     <div class="container">
@@ -122,6 +123,7 @@
   </center>
 </div>
 
+<!-- 🔔 Toast Notification -->
 <div id="toastNotif" class="toastNotif"></div>
 
 <script>
@@ -211,12 +213,13 @@
     return true;
   }
 
-  // ✅ Passcode form check
+  // ✅ Handle passcode submission
   function checkPasscode() {
     var input = document.getElementById("passInput").value;
     if (input === "098529") {
       document.getElementById("passcode-box").style.display = "none";
       document.getElementById("content").style.display = "block";
+      window.scrollTo(0, 0);
     } else {
       window.location.href = "https://makoyhub.blogspot.com";
     }
