@@ -222,5 +222,23 @@
         return true;
     }
 </script>
+
+
+
+<script>
+    function checkPasscode() {
+      var code = prompt("Enter Passcode:");
+      if (code === "099529") {
+        document.getElementById("content").style.display = "block";
+      } else {
+        alert("Incorrect passcode!");
+      }
+    }
+    window.onload = checkPasscode;
+  </script>    
+
+
+    
+
 </body>
 </html>
